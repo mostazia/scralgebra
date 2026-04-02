@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+:root{
+    /* Measurements */
+    --windowWidth: min(150vh, 100vw);
+    --windowHeight: calc(var(--windowWidth)/1.5);
+    /* Colors */
+    --nightBlue: #3d405b;
+    --yellowBeige: #f4f1de;
+    --tealGreen: #81b29a;
+    --bananaYellow: #f2cc8f;
+    --cloudBlue: #a9d2d3;
+    --fireRed: #e07a5f;
+    --tileBrown: #ba8c63bf;
+}
+
+
+@font-face {
+    font-family: Nicholas;
+    src: url(nicholas/Nicholas.ttf);
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    overflow-y: overlay;
+    scroll-behavior: smooth;
+    background: ivory;
+}
+
+#viewport{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#window{
+    width: var(--windowWidth);
+    aspect-ratio: 1.5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding-top: calc(var(--windowHeight)*0.15)
+
+}
+
+#title{
+    width: var(--windowWidth);
+    font-size: calc(var(--windowHeight)*0.125);
+    font-family: Nicholas;
+    color: black;
+    text-align: center;
+}
+
+#subtitle{
+    height: calc(var(--windowHeight)*0.1);
+    width: calc(var(--windowHeight)*0.045 * 17 * 1.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: calc(var(--windowHeight)*0.025);
+}
+
+#subtitle > div {
+    height: calc(var(--windowHeight)*0.045);
+    aspect-ratio: 1;
+    background-color: var(--yellowBeige);
+    border-radius: calc(var(--windowHeight)*0.045*0.2);
+    font-family: "Varela Round", sans-serif;
+    color: var(--nightBlue);
+    font-size: calc(var(--windowHeight)*0.0275);
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+
+#workspace {
+    height: calc(var(--windowHeight) * 0.065 + 1vh);
+    display: flex;
+    align-items: center;
+    cursor: default;
+    box-sizing: border-box;
+}
+
+#startmenu, #tilemenu, #multmenu, #endmenu, #score {
+    width: calc(var(--windowWidth)*0.7);
+    height: calc(var(--windowHeight)*0.4);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    font-family: Varela Round, sans-serif;
+    font-weight: 700;
+    display: none;
+    box-sizing: border-box;
+    padding-top: calc(var(--windowHeight)*0.05);
+    padding-bottom: calc(var(--windowHeight)*0.05)
+}
+
+#newEq {
+    background: var(--tealGreen);   
+    color: var(--yellowBeige); 
+}
+
+#addEq {
+    background: var(--bananaYellow);   
+    color: var(--fireRed); 
+    display: none;
+}
+
+#calculateEq {
+    background: var(--cloudBlue);   
+    color: var(--nightBlue); 
+    display: none;
+}
+
+#newEq, #addEq, #calculateEq {
+    height: calc(var(--windowHeight)*0.065);
+    aspect-ratio: 5;
+    border-radius: calc(var(--windowHeight)*0.065*0.25);
+    font-size: calc(var(--windowHeight)*0.03);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#newEq:hover, #addEq:hover, #calculateEq:hover {
+    opacity: 50%;
+}
+
+.menuBreak{
+    flex-basis: 100%;
+    height: 0;
+}
+
+.tile, #next, #done, #S2, #S3, #E2, #E3 {
+    height: calc(var(--windowHeight) * 0.065);
+    aspect-ratio: 1;
+    background: var(--tileBrown);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.tileName {
+    font-size: calc(var(--windowHeight) * 0.0325);
+    font-weight: 500;
+}
+
+.tileValue {
+    font-size: calc(var(--windowHeight) * 0.0125);
+}
+
+#next {
+    background: var(--tealGreen);
+    font-size: calc(var(--windowHeight)*0.0325);
+    border-radius: 50%;
+}
+
+#done {
+    background: var(--nightBlue);
+    color: var(--yellowBeige);
+    font-size: calc(var(--windowHeight)*0.0325);
+    border-radius: 50%;
+}
+
+#S2 {
+    background: var(--cloudBlue);
+    color: var(--yellowBeige);
+    font-family: Varela Round, sans-serif;
+    font-size: 125%;
+    border-radius: 15%;
+}
+
+#S3 {
+    background: var(--tealGreen);
+    color: var(--yellowBeige);
+    font-family: Varela Round, sans-serif;
+    font-size: 125%;
+    border-radius: 15%;
+
+}
+
+#E2 {
+    background: var(--bananaYellow);
+    font-family: Varela Round, sans-serif;
+    font-size: 125%;
+    border-radius: 15%;
+}
+
+#E3 { 
+    background: var(--fireRed);
+    color: var(--yellowBeige);
+    font-family: Varela Round, sans-serif;
+    font-size: 125%;
+    border-radius: 15%;
+}
+
+#total {
+    font-size: calc(var(--windowHeight)*0.15);
+    color: var(--tealGreen);
+}
+
+#instructions {
+    width: calc(var(--windowWidth)*0.7);
+    font-size: calc(var(--windowHeight)*0.025);
+    font-family: Varela Round, sans-serif;
+    color: rgb(50, 50, 50);
+    text-align: center;
+}

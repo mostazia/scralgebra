@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head> 
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Scralgebra Score Calculator</title> 
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="favicon.ico">
+        <script>
+            var total = 0;
+            var equationTotal = 0;
+            var equationLen = 0;
+            var workspace = document.getElementById("workspace");
+            var add = false;
+            var multVal = 0;
+
+            function addTile(id, value){
+                equationTotal += value;
+                equationLen += 1; 
+                if (!workspace) {workspace = document.getElementById("workspace")}
+
+                if (id == 'lpar') {
+                    id = "("
+                } else if (id == 'rpar'){
+                    id = ")"
+                }
+
+                workspace.innerHTML += `<div id="tile${equationLen}" class="tile" onclick="clickTile('tile${equationLen}', ${value})">
+                        <div class="tileName">${id}</div>
+                        <div class="tileValue">${value}</div>
+                    </div>`
+            }
+
+            function clickTile(id, value){
+                if (add) {
+                document.getElementById(id).remove();
+                equationTotal -= value;
+                } else if (multVal) {
+                    equationTotal += (multVal - 1)*value;
+                    if (multVal == 2){
+                    document.getElementById(id).style.background = "var(--cloudBlue)"}
+                    else {
+                    document.getElementById(id).style.background = "var(--tealGreen)"   
+                    }
+                }
+            }
+
+            function multTile(id){
+                if (id == "2S"){
+                    multVal = 2;
+                } else if (id == "3S"){
+                    multVal = 3;
+                } else if (id == "2E"){
+                    equationTotal = 2*equationTotal
+                    workspace.style.border = "0.5vh solid var(--bananaYellow)"
+                } else {
+                    equationTotal = 3*equationTotal
+                    workspace.style.border = "0.5vh solid var(--fireRed)"
+                }
+            }
+
+            function newEq(){
+                add = true;
+                total = 0;
+                document.getElementById("total").remove();
+                document.getElementById("score").style.display = "none";
+                document.getElementById("workspace").innerHTML = ""
+                document.getElementById("workspace").style.border = ""
+                document.getElementById("startmenu").style.display = "none";
+                document.getElementById("tilemenu").style.display = "flex";
+                document.getElementById("instructions").innerHTML = "Click on the tiles that the player <u>added</u> to the equation in this round.";
+            }
+
+            function next(){
+                add = false;
+                document.getElementById("tilemenu").style.display = "none";
+                document.getElementById("multmenu").style.display = "flex";
+                document.getElementById("instructions").innerHTML = "Let's first apply <b>symbol</b> multipliers. Click on the multiplier and the tile that it applies to. You can do this for as many symbol multipliers as necessary. Finally, click on the <b>expression</b> multipliers that apply."
+            }
+
+            function done(){
+                document.getElementById("multmenu").style.display = "none";
+                document.getElementById("endmenu").style.display = "flex";
+                document.getElementById("instructions").innerHTML = "Click <i>Add Equation</i> if the player contributed to more than one equation in their turn. Otherwise, click <i>Calculate</i>."
+            }
+
+            function addMore(){
+                total += equationTotal;
+                document.getElementById("workspace").innerHTML = ""
+                document.getElementById("workspace").style.border = ""
+                equationTotal = 0;
+                equationLen = 0;
+                add = true;
+                multVal = 0;
+                document.getElementById("endmenu").style.display = "none";
+                document.getElementById("tilemenu").style.display = "flex"
+                document.getElementById("instructions").innerHTML = "Click on the tiles that the player <u>added</u> to the equation in this round.";
+            }
+
+            function score() {
+                total += equationTotal;
+                document.getElementById("endmenu").style.display = "none";
+                document.getElementById("score").style.display = "flex";
+                document.getElementById("score").innerHTML = `<div id="total">${total}</div>` + document.getElementById("score").innerHTML;
+                equationTotal = 0;
+                equationLen = 0;
+                multVal = 0;
+                document.getElementById("instructions").innerHTML = "Click the button above when you are ready to move onto another player!"
+            }
+        </script>
+    </head>
+    <body>
+        <div id="viewport">
+            <div id="window">
+                <div id="title">Scralgebra</div>
+                <div id="subtitle">
+                    <div>S</div>
+                    <div>C</div>
+                    <div>O</div>
+                    <div>R</div>
+                    <div>E</div>
+                    <div style="background: transparent">&nbsp;</div>
+                    <div>C</div>
+                    <div>A</div>
+                    <div>L</div>
+                    <div>C</div>
+                    <div>U</div>
+                    <div>L</div>
+                    <div>A</div>
+                    <div>T</div>
+                    <div>O</div>
+                    <div>R</div>
+                </div>
+                <div id="workspace">
+                </div>
+                <div id="startmenu" style="display: flex;">
+                    <div id="newEq" onclick="newEq()">New Turn</div>
+                </div>
+                <div id="tilemenu">
+                    <div id="0" class="tile" onclick="addTile(0, 0)">
+                        <div class="tileName">0</div>
+                        <div class="tileValue">0</div>
+                    </div><div id="1" class="tile" onclick="addTile(1, 0)">
+                        <div class="tileName">1</div>
+                        <div class="tileValue">0</div>
+                    </div><div id="2" class="tile" onclick="addTile(2, 1)">
+                        <div class="tileName">2</div>
+                        <div class="tileValue">1</div>
+                    </div>
+                    <div id="3" class="tile" onclick="addTile(3, 1)">
+                        <div class="tileName">3</div>
+                        <div class="tileValue">1</div>
+                    </div>
+                    <div id="4" class="tile" onclick="addTile(4, 2)">
+                        <div class="tileName">4</div>
+                        <div class="tileValue">2</div>
+                    </div>
+                    <div id="5" class="tile" onclick="addTile(5, 2)">
+                        <div class="tileName">5</div>
+                        <div class="tileValue">2</div>
+                    </div>
+                    <div id="6" class="tile" onclick="addTile(6, 2)">
+                        <div class="tileName">6</div>
+                        <div class="tileValue">2</div>
+                    </div>
+                    <div id="7" class="tile" onclick="addTile(7, 3)">
+                        <div class="tileName">7</div>
+                        <div class="tileValue">3</div>
+                    </div><div id="8" class="tile" onclick="addTile(8, 3)">
+                        <div class="tileName">8</div>
+                        <div class="tileValue">3</div>
+                    </div><div id="9" class="tile" onclick="addTile(9, 3)">
+                        <div class="tileName">9</div>
+                        <div class="tileValue">3</div>
+                    </div>
+                    <div class="menuBreak"></div>
+                    <div id="lpar" class="tile" onclick="addTile('lpar', 0)">
+                        <div class="tileName">&lpar;</div>
+                    </div>
+                    <div id="rpar" class="tile" onclick="addTile('rpar', 0)">
+                        <div class="tileName">&rpar;</div>
+                    </div><div id="^" class="tile" onclick="addTile('^', 5)">
+                        <div class="tileName">^</div>
+                        <div class="tileValue">5</div>
+                    </div><div id="x" class="tile" onclick="addTile('&times;', 3)">
+                        <div class="tileName">&times;</div>
+                        <div class="tileValue">3</div>
+                    </div>
+                    <div id="/" class="tile" onclick="addTile('&#247;', 4)">
+                        <div class="tileName">&#247;</div>
+                        <div class="tileValue">4</div>
+                    </div>
+                    <div id="+" class="tile" onclick="addTile('+', 1)">
+                        <div class="tileName">+</div>
+                        <div class="tileValue">1</div>
+                    </div><div id="-" class="tile" onclick="addTile('-', 1)">
+                        <div class="tileName">-</div>
+                        <div class="tileValue">1</div>
+                    </div>
+                    <div id="=" class="tile" onclick="addTile('=', 1)">
+                        <div class="tileName">=</div>
+                        <div class="tileValue">1</div>
+                    </div>
+                    <div class="menuBreak"></div>
+                    <div id="next" onclick="next()">&#10003;</div>
+                </div>
+                <div id="multmenu">
+                    <div id="S2" onclick = "multTile('2S')">2S</div>
+                    <div id="S3" onclick = "multTile('3S')">3S</div>
+                    <div id="E2" onclick = "multTile('2E')">2E</div>
+                    <div id="E3" onclick = "multTile('3E')">3E</div>
+                    <div class="menuBreak"></div>
+                    <div id="done" onclick="done()">&#10003;</div>
+                </div>
+                <div id="endmenu">
+                    <div id="addEq" onclick="addMore()">Add Equation</div>
+                    <div id="calculateEq" onclick = "score()">Calculate</div>
+                </div>
+                <div id="score">
+                    <div id="total"></div>
+                    <div class="menuBreak"></div>
+                    <div id="newEq" style="background: var(--bananaYellow)" onclick="newEq()">New Turn</div>
+                </div>
+                <div id="instructions">Click the button above to calculate the point value of a player's turn!</div>
+            </div>
+        </div>
+    </body>
+</html> 
